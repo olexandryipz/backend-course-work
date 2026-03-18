@@ -2,19 +2,27 @@
 namespace App\Controllers;
 
 use App\Core\Database;
+use App\Models\Product;
 
 class HomeController {
     public function index() {
-        echo "<h1>Головна сторінка</h1>";
-        echo "<p>Ласкаво просимо до нашого інтернет-магазину одягу, який працює на MVC!</p>";
+        $title = "Головна сторінка";
+        $description = "Ласкаво просимо до нашого інтернет-магазину одягу! Це чистий MVC.";
+
+        $dbStatus = ['error' => false, 'message' => ''];
+        $products = [];
 
         try {
             $db = Database::getInstance()->getConnection();
             if ($db) {
-                echo "<p style='color:green; font-weight:bold;'>База даних успішно підключена до нашого контролера!</p>";
+                $dbStatus['message'] = "База даних успішно підключена!";
+                $products = Product::getAll();
             }
         } catch (\Exception $e) {
-            echo "<p style='color:red;'>❌ Помилка БД: " . $e->getMessage() . "</p>";
+            $dbStatus['error'] = true;
+            $dbStatus['message'] = "Помилка БД: " . $e->getMessage();
         }
+
+        require_once __DIR__ . '/../Views/home.php';
     }
 }
