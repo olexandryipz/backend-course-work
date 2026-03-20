@@ -110,3 +110,71 @@ VALUES
 (N'Джинси класичні сині', 1200.50, N'Стильні джинси прямого крою.', 1, '32'),
 (N'Худі оверсайз чорне', 950.00, N'Тепле худі з глибоким капюшоном.', 1, 'L');
 GO
+
+USE ClothingStoreDB;
+GO
+
+INSERT INTO Users (Role, Name, Email, PasswordHash, CreatedAt) 
+VALUES ('Customer', N'Тестовий Клієнт', 'test@test.com', 'dummy_hash_123', GETDATE());
+GO
+
+USE ClothingStoreDB;
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID(N'Products') AND name = N'ImageUrl')
+BEGIN
+    ALTER TABLE Products ADD ImageUrl NVARCHAR(255) NULL;
+END
+GO
+
+USE ClothingStoreDB;
+GO
+
+DELETE FROM Products;
+GO
+
+INSERT INTO Products (CategoryId, Name, Price, Description, Size, ImageUrl)
+VALUES 
+(1, N'Класична біла футболка', 450.00, N'Базова біла футболка зі 100% бавовни. М''яка та приємна до тіла.', 'M', 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=300&auto=format&fit=crop'),
+(1, N'Джинси Straight Fit сині', 1250.00, N'Стильні чоловічі джинси прямого крою. Якісний денім.', '32', 'https://images.pexels.com/photos/1598507/pexels-photo-1598507.jpeg?auto=compress&cs=tinysrgb&w=300'),
+(1, N'Чорне худі Oversize', 980.00, N'Тепле худі з капюшоном та кишенею кенгуру. Унісекс.', 'L', 'https://images.unsplash.com/photo-1578587018452-892bacefd3f2?q=80&w=300&auto=format&fit=crop'),
+(1, N'Шкіряна куртка байкерська', 3500.00, N'Стильна куртка зі штучної шкіри. Застібка на блискавку.', 'L', 'https://images.pexels.com/photos/1124468/pexels-photo-1124468.jpeg?auto=compress&cs=tinysrgb&w=300'),
+(1, N'Білі кросівки Classic', 2100.00, N'Класичні білі кросівки на кожен день. Зручна підошва.', '42', 'https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=300&auto=format&fit=crop'),
+(1, N'Сукня літня квіткова', 1150.00, N'Легка літня сукня з квітковим принтом. Підкреслює талію.', 'S', 'https://images.pexels.com/photos/985635/pexels-photo-985635.jpeg?auto=compress&cs=tinysrgb&w=300'),
+(1, N'Чоловічий костюм сірий', 4200.00, N'Діловий костюм-двійка. Піджак та штани. Вовна.', '50', 'https://images.unsplash.com/photo-1593032465175-481ac7f401a0?q=80&w=300&auto=format&fit=crop'),
+(1, N'Жіночий кардиган в''язаний', 1300.00, N'Теплий в''язаний кардиган на ґудзиках. М''яка пряжа.', 'M', 'https://images.pexels.com/photos/1031737/pexels-photo-1031737.jpeg?auto=compress&cs=tinysrgb&w=300');
+GO
+
+USE ClothingStoreDB;
+GO
+
+DELETE FROM OrderItems;
+
+DELETE FROM Orders;
+
+DELETE FROM Products;
+GO
+
+INSERT INTO Products (CategoryId, Name, Price, Description, Size, ImageUrl)
+VALUES 
+(1, N'Класична біла футболка', 450.00, N'Базова біла футболка зі 100% бавовни. М''яка та приємна до тіла.', 'M', 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=300&auto=format&fit=crop'),
+(1, N'Джинси Straight Fit сині', 1250.00, N'Стильні чоловічі джинси прямого крою. Якісний денім.', '32', 'https://images.pexels.com/photos/1598507/pexels-photo-1598507.jpeg?auto=compress&cs=tinysrgb&w=300'),
+(1, N'Чорне худі Oversize', 980.00, N'Тепле худі з капюшоном та кишенею кенгуру. Унісекс.', 'L', 'https://images.unsplash.com/photo-1578587018452-892bacefd3f2?q=80&w=300&auto=format&fit=crop'),
+(1, N'Шкіряна куртка байкерська', 3500.00, N'Стильна куртка зі штучної шкіри. Застібка на блискавку.', 'L', 'https://images.pexels.com/photos/1124468/pexels-photo-1124468.jpeg?auto=compress&cs=tinysrgb&w=300'),
+(1, N'Білі кросівки Classic', 2100.00, N'Класичні білі кросівки на кожен день. Зручна підошва.', '42', 'https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=300&auto=format&fit=crop'),
+(1, N'Сукня літня квіткова', 1150.00, N'Легка літня сукня з квітковим принтом. Підкреслює талію.', 'S', 'https://images.pexels.com/photos/985635/pexels-photo-985635.jpeg?auto=compress&cs=tinysrgb&w=300'),
+(1, N'Чоловічий костюм сірий', 4200.00, N'Діловий костюм-двійка. Піджак та штани. Вовна.', '50', 'https://images.unsplash.com/photo-1593032465175-481ac7f401a0?q=80&w=300&auto=format&fit=crop'),
+(1, N'Жіночий кардиган в''язаний', 1300.00, N'Теплий в''язаний кардиган на ґудзиках. М''яка пряжа.', 'M', 'https://images.pexels.com/photos/1031737/pexels-photo-1031737.jpeg?auto=compress&cs=tinysrgb&w=300');
+GO
+
+USE ClothingStoreDB;
+GO
+
+UPDATE Products 
+SET ImageUrl = 'https://smash.com.ua/image/cache/catalog/0.new2025/1.%D0%B2%D0%B5%D1%80%D1%85/5.%D1%85%D1%83%D0%B4%D0%B8/Boxy%20Fit%20440%20gsm/%D0%A7%D1%91%D1%80%D0%BD%D0%BE%D0%B5/1-700x956.png'
+WHERE Name LIKE N'%Чорне худі%';
+
+UPDATE Products 
+SET ImageUrl = 'https://images.pexels.com/photos/11039284/pexels-photo-11039284.jpeg?auto=compress&cs=tinysrgb&w=300&h=400&fit=crop'
+WHERE Name LIKE N'%Жіночий кардиган%';
+GO
