@@ -1,6 +1,8 @@
 <?php
 ob_start();
 
+session_start();
+
 spl_autoload_register(function ($className) {
     $path = str_replace('App\\', '../app/', $className);
     $path = str_replace('\\', '/', $path) . '.php';
