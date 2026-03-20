@@ -42,9 +42,10 @@ class AuthController {
         $user = User::findByEmail($email);
 
         if ($user && password_verify($password, $user['PasswordHash'])) {
+            // ЗАЛІЗОБЕТОННЕ РІШЕННЯ: очищуємо дані від невидимих пробілів SQL Server
             $_SESSION['user_id'] = $user['Id'];
-            $_SESSION['user_name'] = $user['Name'];
-            $_SESSION['user_role'] = $user['Role'];
+            $_SESSION['user_name'] = trim($user['Name']);
+            $_SESSION['user_role'] = trim($user['Role']);
 
             header("Location: /");
             exit();

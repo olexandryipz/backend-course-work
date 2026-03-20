@@ -29,7 +29,7 @@
 <body>
 
 <header>
-    <a href="/">👕 Clothing Store</a>
+    <a href="/">Clothing Store</a>
     <div class="nav-links">
         <a href="/">Головна</a>
 
@@ -39,11 +39,16 @@
             $cartCount = array_sum($_SESSION['cart']);
         }
         ?>
-        <a href="/cart">🛒 Кошик (<?= $cartCount ?>)</a>
+        <a href="/cart">Кошик (<?= $cartCount ?>)</a>
 
         <div class="user-menu">
             <?php if (isset($_SESSION['user_id'])): ?>
-                <span>👤 <?= htmlspecialchars($_SESSION['user_name']) ?></span>
+
+                <?php if (isset($_SESSION['user_role']) && trim($_SESSION['user_role']) === 'Admin'): ?>
+                    <a href="/admin" style="color: #ffc107;">Адмінка</a>
+                <?php endif; ?>
+
+                <span><?= htmlspecialchars($_SESSION['user_name']) ?></span>
                 <a href="/auth/logout" class="logout">Вийти</a>
             <?php else: ?>
                 <a href="/auth/login" style="color: #fff;">Увійти</a>

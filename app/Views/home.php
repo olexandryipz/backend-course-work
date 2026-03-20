@@ -13,7 +13,11 @@
 
                 <div class="product-details">
                     <h3 style="margin-top: 0; font-size: 1.1em;"><?= htmlspecialchars($product['Name'] ?? 'Товар без назви') ?></h3>
-                    <p class="product-price"><?= htmlspecialchars($product['Price'] ?? '0') ?> ₴</p>
+                    <p class="product-price" style="margin-bottom: 5px;"><?= htmlspecialchars($product['Price'] ?? '0') ?> ₴</p>
+
+                    <p style="font-size: 0.85em; color: #666; margin-top: 0; margin-bottom: 15px;">
+                        В наявності: <strong><?= htmlspecialchars($product['StockQuantity'] ?? '0') ?> шт.</strong>
+                    </p>
 
                     <a href="/product/show/<?= $product['Id'] ?? 1 ?>" class="btn btn-blue" style="display:block;">Детальніше</a>
                 </div>
