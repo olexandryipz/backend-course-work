@@ -1,5 +1,10 @@
 <?php require_once __DIR__ . '/partials/header.php'; ?>
 
+    <div style="margin-bottom: 20px; display: flex; gap: 15px;">
+        <a href="/admin" class="btn btn-blue" style="background: #e44d26;">Замовлення</a>
+        <a href="/admin/products" class="btn btn-blue" style="background: #333;">Товари на складі</a>
+    </div>
+
     <div style="padding: 20px; background: white; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
         <h1 style="margin-top: 0;">Адмін-панель: Замовлення</h1>
         <p style="color: #666;">Тут відображаються всі замовлення ваших клієнтів.</p>

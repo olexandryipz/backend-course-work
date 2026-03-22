@@ -178,3 +178,58 @@ UPDATE Products
 SET ImageUrl = 'https://images.pexels.com/photos/11039284/pexels-photo-11039284.jpeg?auto=compress&cs=tinysrgb&w=300&h=400&fit=crop'
 WHERE Name LIKE N'%Жіночий кардиган%';
 GO
+
+USE ClothingStoreDB;
+GO
+
+UPDATE Users 
+SET Role = 'Admin' 
+WHERE Id = (SELECT MIN(Id) FROM Users);
+GO
+
+USE ClothingStoreDB;
+GO
+SELECT Id, Name, Email, Role FROM Users;
+GO
+
+USE ClothingStoreDB;
+GO
+UPDATE Users SET Role = 'Admin' WHERE Id = 3;
+GO
+
+USE ClothingStoreDB;
+GO
+
+DELETE FROM OrderItems;
+
+DELETE FROM Orders;
+
+DBCC CHECKIDENT ('OrderItems', RESEED, 0);
+DBCC CHECKIDENT ('Orders', RESEED, 0);
+
+DELETE FROM Users WHERE Id != 3;
+GO
+
+USE ClothingStoreDB;
+GO
+
+UPDATE Products 
+SET StockQuantity = 10;
+GO
+
+SELECT Name, StockQuantity FROM Products;
+
+USE ClothingStoreDB;
+GO
+
+CREATE TABLE Reviews (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    ProductId INT NOT NULL,
+    UserId INT NOT NULL,
+    Rating INT NOT NULL CHECK (Rating >= 1 AND Rating <= 5),
+    Comment NVARCHAR(MAX) NOT NULL,
+    CreatedAt DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (ProductId) REFERENCES Products(Id) ON DELETE CASCADE,
+    FOREIGN KEY (UserId) REFERENCES Users(Id) ON DELETE CASCADE
+);
+GO

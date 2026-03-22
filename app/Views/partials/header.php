@@ -33,6 +33,8 @@
     <div class="nav-links">
         <a href="/">Головна</a>
 
+        <a href="/top" style="color: #ffc107; font-weight: bold;">Топ-5</a>
+
         <?php
         $cartCount = 0;
         if (isset($_SESSION['cart'])) {
@@ -45,7 +47,7 @@
             <?php if (isset($_SESSION['user_id'])): ?>
 
                 <?php if (isset($_SESSION['user_role']) && trim($_SESSION['user_role']) === 'Admin'): ?>
-                    <a href="/admin" style="color: #ffc107;">Адмінка</a>
+                    <a href="/admin" style="color: #ffc107;">Адмін-панель</a>
                 <?php endif; ?>
 
                 <span><?= htmlspecialchars($_SESSION['user_name']) ?></span>

@@ -2,19 +2,38 @@
 namespace App\Controllers;
 
 use App\Models\Product;
+use App\Models\Review;
 
 class ProductController {
+
     public function show($id) {
         $product = Product::getById($id);
-
         if (!$product) {
-            http_response_code(404);
-            echo "<h1 style='color:red; text-align:center; margin-top:50px;'>Помилка 404: Товар не знайдено!</h1>";
-            echo "<div style='text-align:center;'><a href='/'>Повернутися на головну</a></div>";
-            return;
+            header("Location: /");
+            exit();
         }
 
-        $title = $product['Name'] ?? 'Деталі товару';
+        $title = $product['Name'];
+
+        $reviews = Review::getByProductId($id);
+
         require_once __DIR__ . '/../Views/product.php';
+    }
+
+    public function addReview($id) {
+        if (empty($_SESSION['user_id'])) {
+            header("Location: /auth/login");
+            exit();
+        }
+
+        $rating = $_POST['rating'] ?? 5;
+        $comment = trim($_POST['comment'] ?? '');
+
+        if (!empty($comment)) {
+            Review::add($id, $_SESSION['user_id'], $rating, $comment);
+        }
+
+        header("Location: /product/show/" . $id);
+        exit();
     }
 }
